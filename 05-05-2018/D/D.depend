@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1525549784 source:c:\users\morcado\desktop\concurso\d\main.cpp
+	<iostream>
+	<string>
+	<math.h>
+

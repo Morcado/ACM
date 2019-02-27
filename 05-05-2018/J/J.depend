@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1525559652 source:c:\users\morcado\desktop\concurso\j\main.cpp
+	<iostream>
+	<queue>
+	<string>
+

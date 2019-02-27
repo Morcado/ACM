@@ -1,0 +1,377 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+typedef struct{
+    int ptsCat;
+    int index;
+}Tiro;
+
+typedef struct {
+    vector<Tiro> tiros;
+    int suma{};
+}Datos;
+
+vector<Datos> Cat;
+
+void CreaEstructura()
+{
+    for(int i = 0; i < 13; i++)
+    {
+        Datos d = Datos();
+        Cat.push_back(d);
+    }
+}
+
+int BuscaCat(vector<int> v, int x)
+{
+    int count = 0;
+    for(int i = 0; i < 5 && v[i] <= x; i++)
+    {
+        if(v[i] == x)
+        count++;
+    }
+    return (count * x);
+}
+
+int BuscaIguales(vector<int> v)
+{
+    int r;
+    int rep = 1;
+    for(int j = 0; j < 3; j++)
+    {
+        r = 0;
+        for(int i = 0; i < 5 && v[i] <= v[j]; i++)
+        {
+            if(v[j] == v[i])
+            {
+                r++;
+            }
+        }
+        if(r > rep)
+            rep = r;
+        if(rep == 5)
+            return rep;
+    }
+    return rep;
+}
+
+bool BuscaSiguiente(int x, vector<int> v)
+{
+    for (int j : v) {
+        if(j == x)
+            return true;
+    }
+    return false;
+}
+
+int BuscaSecuencia(vector<int> v)
+{
+    int cont = 0;
+    for(int i = 0; (unsigned)i < v.size(); i++)
+    {
+        if(BuscaSiguiente(v[0] + i, v))
+            cont++;
+        else
+            break;
+    }
+    if(cont == 4)
+        return 1;
+    if(cont == 5)
+        return 2;
+
+    cont = 0;
+    for(int i = 0; (unsigned)i < v.size(); i++)
+    {
+        if(BuscaSiguiente(v[1] + i, v))
+            cont++;
+        else
+            break;
+    }
+    if(cont == 4)
+        return 1;
+    if(cont == 5)
+        return 2;
+
+    return 0;
+}
+
+bool BuscaFull(vector<int> v)
+{
+    return (v[0] == v[1] && v[1] == v[2] && v[3] == v[4]) || (v[0] == v[1] && v[2] == v[3] && v[3] == v[4]);
+}
+
+void ImprimeLista()
+{
+    for(int i = 0; i < 13; i++)
+    {
+        cout << "Cat --> " << i + 1 << " ";
+        for (auto &tiro : Cat[i].tiros) {
+            cout << "(Tiro:" << tiro.index << "_Pts:" << tiro.ptsCat << "), ";
+        }
+        cout << endl;
+    }
+}
+
+bool OrdenarCategoria(Tiro a, Tiro b)
+{
+    return (a.ptsCat > b.ptsCat);
+}
+
+bool OrdenaAux(Tiro a, Tiro b)
+{
+    return (Cat[a.index-1].suma < Cat[b.index-1].suma);
+}
+
+void OrdenaTotales()
+{
+    vector<Tiro> aux, aux2;
+    int puntos;
+    int j = 0;
+    for(int i = 0; i < 13; i++)
+    {
+        if(!Cat[i].tiros.empty())
+        {
+            while((unsigned)j < Cat[i].tiros.size())
+            {
+                for(puntos = Cat[i].tiros[j].ptsCat; (unsigned)j < Cat[i].tiros.size() && Cat[i].tiros[j].ptsCat == puntos; j++)
+                {
+                    aux.push_back(Cat[i].tiros[j]);
+                }
+                sort(aux.begin(), aux.end(), OrdenaAux);
+                for (auto k : aux) {
+                    aux2.push_back(k);
+                }
+                aux.clear();
+            }
+            Cat[i].tiros = aux2;
+            aux2.clear();
+            j = 0;
+        }
+    }
+}
+
+bool EncuentraRepetido(Tiro r[], Tiro a)
+{
+    for(int i = 0; i < 13; i++)
+    {
+        if(r[i].index == a.index) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int YaUsada(int T, vector<Tiro> v, int Ir) {
+    for (int i = 0; i < 13; i++) {
+        if (v[i].index == T) {
+            return i;
+        }
+
+    }
+    return -1;
+}
+
+bool Cambia(int cr, vector<Tiro> r, int *Ir, int cont) {
+
+}
+
+void BuscaResultados(Tiro *r)
+{
+    int suma = 0;
+    int total = 0;
+    int Ir[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    if(!Cat[9].tiros.empty())
+    {
+        r[9] = Cat[9].tiros[Ir[9]];
+        total += r[9].ptsCat;
+    }
+    if(!Cat[12].tiros.empty())
+    {
+        while(EncuentraRepetido(r, Cat[12].tiros[Ir[12]]) && (unsigned)Ir[12] < Cat[12].tiros.size())
+        {
+            Ir[12]++;
+        }
+        if((unsigned)Ir[12] < Cat[12].tiros.size())
+        {
+            r[12] = Cat[12].tiros[Ir[12]];
+            total += r[12].ptsCat;
+        }
+    }
+
+    if(!Cat[11].tiros.empty())
+    {
+        while(EncuentraRepetido(r, Cat[11].tiros[Ir[11]]) && (unsigned)Ir[11] < Cat[11].tiros.size())
+        {
+            Ir[11]++;
+        }
+        if((unsigned)Ir[11] < Cat[11].tiros.size())
+        {
+            r[11] = Cat[11].tiros[Ir[11]];
+            total += r[11].ptsCat;
+        }
+    }
+
+    for(int i = 0; i < 6; i++){
+        while(EncuentraRepetido(r, Cat[i].tiros[Ir[i]]) && (unsigned)Ir[i] < Cat[i].tiros.size()){
+            int cr = YaUsada(Cat[i].tiros[Ir[i]], r);
+            Cambia(, cr, r, Ir, i);
+        }
+        if((unsigned)Ir[i] < Cat[i].tiros.size()){
+            r[i] = Cat[i].tiros[Ir[i]];
+            suma += r[i].ptsCat;
+            r[i].ptsCat;
+        }
+    }
+
+    if(suma > 63){
+        r[13].ptsCat = 35;
+        total += 35;
+    }
+
+    if(!Cat[10].tiros.empty())
+    {
+        while(EncuentraRepetido(r, Cat[10].tiros[Ir[10]]) && (unsigned)Ir[10] < Cat[10].tiros.size())
+        {
+            Ir[10]++;
+        }
+        if((unsigned)Ir[10] < Cat[10].tiros.size())
+        {
+            r[10] = Cat[10].tiros[Ir[10]];
+            total += r[10].ptsCat;
+        }
+    }
+
+    for(int i = 8; i > 5; i--)
+    {
+        while(!Cat[i].tiros.empty() && EncuentraRepetido(r, Cat[i].tiros[Ir[i]]) && (unsigned)Ir[i] < Cat[i].tiros.size())
+        {
+            Ir[i]++;
+        }
+        if((unsigned)Ir[i] < Cat[i].tiros.size())
+        {
+            r[i] = Cat[i].tiros[Ir[i]];
+            total += r[i].ptsCat;
+        }
+        r[14].ptsCat = total;
+    }
+}
+
+int main() {
+
+    CreaEstructura();
+    vector<int> entrada;
+    int ind;
+    int r = 0, r1, aux;
+    Tiro t;
+
+    while(r < 13)
+    {
+        entrada.clear();
+        ind = r+1;
+        r1 = 0;
+        while(r1 < 5)
+        {
+            cin >> aux;
+            entrada.push_back(aux);
+            r1++;
+        }
+        sort(entrada.begin(), entrada.end());
+
+        //para las primeras 6 categorias, donde solo se guarda la suma de los numeros repetidos
+        for(int c = 0; c < 6; c++)
+        {
+            t.ptsCat = BuscaCat(entrada, c+1);
+            if(t.ptsCat != 0)
+            {
+                t.index = ind;
+                Cat[c].tiros.push_back(t);
+            }
+        }
+
+        //Para la categoria 7, donde se guarda la suma total del tiro
+        int sum = 0;
+        for(int c = 0; c < 5; c++) {
+            sum += entrada[c];
+        }
+        Cat[r].suma = sum;
+        t.index  = ind;
+        t.ptsCat = sum;
+        Cat[6].tiros.push_back(t);
+
+        //Para las categorias 8, 9 y 10. La funcion retorna un numero maximo de repeticiones de un numero (0 a 5)
+        int rep;
+        rep = BuscaIguales(entrada);
+        if(rep >= 3)
+        {
+            t.index = ind;
+            t.ptsCat = sum;
+            if(rep == 5)
+            {
+                Cat[8].tiros.push_back(t);
+                Cat[7].tiros.push_back(t);
+                t.ptsCat = 50;
+                Cat[9].tiros.push_back(t);
+            }
+            else
+            {
+                if(rep == 4)
+                {
+                    Cat[8].tiros.push_back(t);
+                    Cat[7].tiros.push_back(t);
+                }
+                else
+                    Cat[7].tiros.push_back(t);
+            }
+        }
+
+        //Para las categorias 11 y 12. la funcion retorna 0, 1 o 2 para no hay secuencia, 4 en secuencia y 5 en secuencia respectivamente
+        int sec;
+        sec = BuscaSecuencia(entrada);
+        if(sec != 0)
+        {
+            t.index = ind;
+            t.ptsCat = 25;
+            Cat.at(10).tiros.push_back(t);
+            if(sec == 2)
+            {
+                t.ptsCat = 35;
+                Cat.at(11).tiros.push_back(t);
+            }
+        }
+
+        //Para la categoria 13. La funcion retorna true o false si encuentra un full o no
+        if(BuscaFull(entrada))
+        {
+            t.index = ind;
+            t.ptsCat = 40;
+            Cat.at(12).tiros.push_back(t);
+        }
+        r++;
+    }
+
+    //Ordena cada una de las 13 con dos factores: de mayor a menor en puntos de categoria y de menor a mayor en puntos totales
+    for (int i = 0; i < 13; i++)
+    {
+        sort(Cat[i].tiros.begin(), Cat[i].tiros.end(), OrdenarCategoria);
+    }
+    OrdenaTotales();
+    ImprimeLista();
+
+    Tiro Resultados[15];
+
+    for (auto &Resultado : Resultados) {
+        Resultado.index = 0;
+        Resultado.ptsCat = 0;
+    }
+
+    BuscaResultados(Resultados);
+
+    for(auto &res : Resultados)
+    {
+        cout << res.ptsCat << " ";
+    }
+    return 0;
+}

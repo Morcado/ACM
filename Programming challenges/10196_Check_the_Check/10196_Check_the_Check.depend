@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1535059462 source:c:\users\morcado\desktop\problem set\10196_check_the_check\main.cpp
+	<iostream>
+	<sstream>
+	<string>
+	<vector>
+

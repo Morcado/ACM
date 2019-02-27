@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1536670903 source:c:\users\morcado\desktop\problem set\10202_pairsumonious\main.cpp
+	<iostream>
+	<algorithm>
+	<vector>
+
