@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/Automaton.dir/main.cpp.o  -o Automaton.exe -Wl,--out-implib,libAutomaton.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
