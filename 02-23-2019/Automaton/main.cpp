@@ -1,19 +1,18 @@
-#include <iostream>
-#include <set>
-#include <iterator>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
-
-void CreateStates(const set<int> &states){
-
-}
 
 int main() {
 	int t, n, m, s, k;
+	
+	
 	set<char> gram;
 	vector<int> accepted;
-	vector<set<int>> states;
+	vector<bitset<10>> states;
+	map<char, bitset<18>> statess;
+	
+	map<bitset<18>, bitset<18>> mmm[16];
+	
+	
 	
 	cin >> t;
 	while (t--) {
@@ -46,8 +45,6 @@ int main() {
 		
 		int q;
 		cin >> q;
-		
-		CreateStates(states);
 		//Move();
 		
 		// Oraciones
