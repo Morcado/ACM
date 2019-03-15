@@ -6,7 +6,7 @@ int main() {
     string numeros, res;
     getline(cin, numeros);
     istringstream iss(numeros);
-    
+
     int menor, mayor, indiceMenor;
     int digitos[10] = {0};
     char c;
@@ -35,29 +35,35 @@ int main() {
                 mayor = digitos[i];
             }
         }
-        //023456789023456789
-        if (mayor == menor) {
-            res += "1";
-            for (int k = 0; k < digitos[0] + 1; k++) {
-                res += "0";
-            }
+        //0112233445566778899
+        if (mayor == menor && digitos[0] == 0) {
+        	res = "10";
         }
         else {
-            
-            for (j = 0; j < digitos[indiceMenor]; j++) {
-                res += to_string(indiceMenor);
-            }
-            
-            if (digitos[0] == 0) {
-                res += "0";
-            }
-            else {
-                res += to_string(indiceMenor);
-            }
-        }
-    }
-    for (char re : res) {
+			if (digitos[0] == menor) {
+				for (j = 0; j < digitos[indiceMenor] + 1; j++) {
+					res += to_string(indiceMenor);
+				}
+			}
+			else {
+				if (digitos[0] < menor) {
+					res += to_string(indiceMenor);
+					for (int j = 0; j < digitos[0] + 1; j++) {
+						res += "0";
+					}
+				}
+				else {
+					for (j = 0; j < digitos[indiceMenor] + 1; j++) {
+						res += to_string(indiceMenor);
+					}
+				}
+			}
+			
+		}
+	}
+	for (char re : res) {
         cout << re;
     }
+    cout << endl;
     return 0;
 }
