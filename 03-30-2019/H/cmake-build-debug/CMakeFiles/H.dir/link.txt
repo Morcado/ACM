@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/H.dir/main.cpp.o  -o H.exe -Wl,--out-implib,libH.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
