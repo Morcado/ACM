@@ -1,0 +1,3 @@
+C:/Users/Morcado/Desktop/ACM Problems/05-27-2019/J/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Morcado/Desktop/ACM Problems/05-27-2019/J/cmake-build-debug/CMakeFiles/J.dir
+C:/Users/Morcado/Desktop/ACM Problems/05-27-2019/J/cmake-build-debug/CMakeFiles/edit_cache.dir
