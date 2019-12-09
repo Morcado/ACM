@@ -19,11 +19,7 @@ int main() {
     int a = -(res[res.size() - 1] - sequence[sequence.size() - 1]);
     //cout << "val a: " << a << "\n";
     res.push_back(a);
-    // res.push_back(-(*(end(res) - 1) - *(end(sequence) - 1)));
-    //for_each(begin(sequence), end(sequence), [&res, &sequence](int i){res.push_back(-(res[i] - sequence[i])); cout << "a: " << i;});
-    // cout << "\n";
-    //for_each(begin(res), end(res), [](int i){cout << i << " ";});
-    //int i = min_element(res.begin(), res.end(), [](int i, int j){return i % 0 == 0});
+    
     int minOdd = res[0], minEven = res[1], r;
 
     for (int i = 2; i < (int)res.size(); i++) {
