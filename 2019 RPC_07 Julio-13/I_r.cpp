@@ -1,3 +1,10 @@
+/*
+	Problema I It's time for montage
+	Aplicación 13 Julio 2019
+	// No aceptado
+    
+*/
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
